@@ -111,6 +111,7 @@ const AddTask = () => {
         });
     }
   };
+
   return (
     <div className="p-9">
       <div className=" lg:w-6/12 lg:mx-auto gap-4 justify-center items-center text-center">
@@ -119,7 +120,7 @@ const AddTask = () => {
           className="bg-base-100 shadow-xl rounded my-4 w-12/6 p-4"
         >
           <h2 className="text-sm md:text-2xl  mb-2 font-bold text-green-400 ">
-            Add Your Task
+            Add Your Task  {user?.displayName}
           </h2>
 
           <p className="mb-3"> {format(new Date(), "PPPP")}.</p>
@@ -131,14 +132,16 @@ const AddTask = () => {
             required
           />
           <br />
-          <textarea
+
+
+          <input
+            type="text"
+            className="w-full rounded my-2 py-6"
+            placeholder="Type Your  Task"
             name="task"
-            id=""
-            cols="40"
-            className="w-full lg:w-full"
-            rows="2"
-            placeholder="Type Your Task"
-          ></textarea>
+            
+          />
+
           <br />
           <input
             type="file"
@@ -150,6 +153,7 @@ const AddTask = () => {
           <br />
 
           <input
+            id="idSubmitTask"
             type="submit"
             className="btn border  hover:bg-green-400 duration-500 hover:duration-300 p-3 rounded"
             value="Submit your Task"

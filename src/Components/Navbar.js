@@ -12,9 +12,9 @@ const Navbar = () => {
    
     return (
   
-        <div className="bg-based-100">
+        <div className="bg-based-100 ">
         <div className=" py-5 ">
-          <div className="relative flex items-center justify-between">
+          <div className="relative flex items-center justify-between sticky z-50">
             <Link
              to=' '
               aria-label="Company"
@@ -38,7 +38,7 @@ const Navbar = () => {
               </li>
               <li>
                <Link
-                 to=' '
+                 to='/myTask'
                  
                   className="font-medium tracking-wide text-teal-accent-400  hover:shadow-xl p-3 rounded hover:duration-500 duration-500 "
                 >
@@ -47,7 +47,7 @@ const Navbar = () => {
               </li>
               <li>
                <Link
-                 to=' '
+                 to='/completeTask'
                  
                   className="font-medium tracking-wide text-teal-accent-400  hover:shadow-xl p-3 rounded hover:duration-500 duration-500 "
                 >
@@ -178,7 +178,7 @@ const Navbar = () => {
                         </li>
                         <li>
                          <Link
-                           to=' '
+                            to='/myTask'
                            
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
@@ -187,19 +187,31 @@ const Navbar = () => {
                         </li>
                         <li>
                          <Link
-                           to=' '
+                          to='/completeTask'
                             
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           >
                             Complete Task
                           </Link>
                         </li>
-                        
                         {
                 user?.uid? <>
-                 <li  className="font-medium tracking-wide text-teal-accent-400  hover:shadow-xl  rounded hover:duration-500 duration-500">            
-                  {user?.email}
-               </li> 
+                
+                <li   className="font-medium tracking-wide text-teal-accent-400  hover:shadow-xl p-3 rounded hover:duration-500 duration-500 ">
+             
+                {
+                  user?.photoURL? <img title={user?.displayName} className='w-8 h-8 rounded-full' src={user?.photoURL} alt="" />
+                  :
+                  <li  className="font-medium tracking-wide text-teal-accent-400  hover:shadow-xl p-3 rounded hover:duration-500 duration-500 ">
+
+                     {user?.email}
+                   
+                 </li>
+
+                } 
+               
+              </li>
+
 
                 <li>
                <Link

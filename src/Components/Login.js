@@ -62,7 +62,7 @@ const Login = () => {
           <input
             type="submit"
             className="btn border md:w-6/12  rounded p-2 border-green-400 hover:bg-green-400 duration-500"
-            value="Register"
+            value="Log In"
           />
         </div>
       </form>
