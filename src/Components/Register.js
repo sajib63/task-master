@@ -1,14 +1,15 @@
-
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import {  FaGithub, FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserContext/UseContext";
 
 const Register = () => {
-  const { createUser, updateUser , googleLogin} = useContext(AuthContext);
-  
-  const navigate= useNavigate();
+  const { createUser, updateUser, googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const createUsers = (event) => {
     event.preventDefault();
@@ -16,36 +17,34 @@ const Register = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const image = form.image.files[0]
-    const formData = new FormData()
+    const image = form.image.files[0];
+    const formData = new FormData();
 
-    formData.append('image', image)
-    const url = "https://api.imgbb.com/1/upload?=600&key=7bfed1b127f1b0296e21aab609f45785"
-    fetch(url, {method: 'POST', body: formData})
-
-        .then(res => res.json())
-        .then(imageData => {
-         const imgUrl=imageData.data.display_url
-         console.log(imgUrl);
-          createUser(email, password)
-          .then(data=>{
+    formData.append("image", image);
+    const url =
+      "https://api.imgbb.com/1/upload?=600&key=7bfed1b127f1b0296e21aab609f45785";
+    fetch(url, { method: "POST", body: formData })
+      .then((res) => res.json())
+      .then((imageData) => {
+        const imgUrl = imageData.data.display_url;
+        console.log(imgUrl);
+        createUser(email, password)
+          .then((data) => {
             console.log(data);
-            updateUser(name, imgUrl)
-            toast.success('successfully created user')
-            navigate('/')
-        
+            updateUser(name, imgUrl);
+            toast.success("successfully created user");
+            navigate(from, { replace: true });
           })
-          .catch(error=> console.log(error.message))
-        })
+          .catch((error) => console.log(error.message));
+      });
   };
 
-  const google=()=>{
-    googleLogin()
-    .then(result=>{
-      toast.success('successfully login')
-      navigate('/')
-    })
-  }
+  const google = () => {
+    googleLogin().then((result) => {
+      toast.success("successfully login");
+      navigate(from, { replace: true });
+    });
+  };
 
   return (
     <div className="overflow-hidden shadow-xl p-5 lg:w-4/12 mx-auto lg:my-16 rounded">
@@ -108,10 +107,12 @@ const Register = () => {
       </fieldset>
 
       <div className="flex gap-6 justify-center items-center my-4">
-        <button onClick={google} className="btn p-4 rounded-full border border-green-400">
+        <button
+          onClick={google}
+          className="btn p-4 rounded-full border border-green-400"
+        >
           <FaGoogle></FaGoogle>
         </button>
-       
       </div>
 
       <p className="text-center">

@@ -6,6 +6,7 @@ import MyTask from "../Components/MyTask";
 import Register from "../Components/Register";
 import UpdatePage from "../Components/UpdatePage";
 import Main from "../Layout/Main";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const route=createBrowserRouter([
     {
@@ -14,21 +15,25 @@ export const route=createBrowserRouter([
         children:[
           
             {
+                path:'/',
+                element:<PrivateRoute><AddTask></AddTask></PrivateRoute>
+            },
+            {
                 path:'/addTask',
-                element:<AddTask></AddTask>
+                element:<PrivateRoute><AddTask></AddTask></PrivateRoute>
             },
             {
                 path:'/myTask',
-                element:<MyTask></MyTask>
+                element:<PrivateRoute><MyTask></MyTask></PrivateRoute>
             },
             {
                 path:'/completeTask',
-                element:<CompleteTask></CompleteTask>
+                element:<PrivateRoute><CompleteTask></CompleteTask></PrivateRoute>
             },
             {
                 path:'/update/:id',
-                element:<UpdatePage></UpdatePage>,
-                loader:({params})=> fetch(`http://localhost:5000/update/${params.id}`)
+                element:<PrivateRoute><UpdatePage></UpdatePage></PrivateRoute>,
+                loader:({params})=> fetch(`https://task-master-server.vercel.app/update/${params.id}`)
             }
            
         ]

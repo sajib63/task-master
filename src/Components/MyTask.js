@@ -20,7 +20,7 @@ const MyTask = () => {
     queryKey: ["task", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/task?email=${user?.email}`
+        `https://task-master-server.vercel.app/task?email=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -35,7 +35,7 @@ const MyTask = () => {
   const deleteButton = (event) => {
     const agree = window.confirm(`Are you sure to delete ${event.title}`);
     if (agree) {
-      fetch(`http://localhost:5000/delete/${event._id}`, {
+      fetch(`https://task-master-server.vercel.app/delete/${event._id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -52,7 +52,7 @@ const MyTask = () => {
 
   // complete button
   const updateButton = (event) => {
-    fetch(`http://localhost:5000/update/${event._id}`, {
+    fetch(`https://task-master-server.vercel.app/update/${event._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application.json",
@@ -68,14 +68,19 @@ const MyTask = () => {
       });
   };
 
-  //  update
-  const update = (event) => {};
+ 
 
   return (
     <div className="">
-      <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
+     {
+        tasks?.length?  <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
         {user?.displayName} Task
       </h1>
+      :
+      <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
+      {user?.displayName} Has 0 Task
+    </h1>
+     }
       {tasks?.map((task) => (
         <div
           key={task._id}
@@ -121,6 +126,8 @@ const MyTask = () => {
           </div>
           <h3 className="text-sm md:text-xl font-medium">{task?.task}</h3>
           <h1>Added: {task?.time}</h1>
+
+        
         </div>
       ))}
     </div>

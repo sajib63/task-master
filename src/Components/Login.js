@@ -2,12 +2,15 @@ import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 
 import {  FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../UserContext/UseContext";
 
 const Login = () => {
   const { loginUser, googleLogin } = useContext(AuthContext);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const loginButon = (event) => {
     event.preventDefault();
@@ -16,7 +19,7 @@ const Login = () => {
     const password = form.password.value;
     loginUser(email, password).then((result) => {
       toast.success("successfully login");
-      navigate('/')
+      navigate(from, { replace: true });
       form.reset();
     })
     .catch(error=> {
@@ -28,7 +31,7 @@ const Login = () => {
     googleLogin()
     .then(result=>{
       toast.success('successfully login')
-      navigate('/')
+      navigate(from, { replace: true });
     })
   }
   return (

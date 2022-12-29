@@ -12,10 +12,10 @@ const UpdatePage = () => {
     const updateButton = (event) => {
       event.preventDefault();
       const task = event.target.task.value;
-      
+
       const user = { task };
 
-      fetch(`http://localhost:5000/updateTask/${data._id}`, {
+      fetch(`https://task-master-server.vercel.app/updateTask/${data._id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

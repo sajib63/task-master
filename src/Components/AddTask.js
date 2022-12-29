@@ -31,7 +31,7 @@ const AddTask = () => {
             complete: false,
           };
           if (imageData.success) {
-            fetch("http://localhost:5000/task", {
+            fetch("https://task-master-server.vercel.app/task", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -65,7 +65,7 @@ const AddTask = () => {
             complete: false,
           };
           if (imageData.success) {
-            fetch("http://localhost:5000/task", {
+            fetch("https://task-master-server.vercel.app/task", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -94,7 +94,7 @@ const AddTask = () => {
         time: format(new Date(), "PPPP"),
         complete: false,
       };
-      fetch("http://localhost:5000/task", {
+      fetch("https://task-master-server.vercel.app/task", {
         method: "POST",
         headers: {
           "content-type": "application/json",

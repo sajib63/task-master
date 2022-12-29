@@ -20,7 +20,7 @@ const CompleteTask = () => {
     queryKey: ["task", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/complete?email=${user?.email}`
+        `https://task-master-server.vercel.app/complete?email=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -35,7 +35,7 @@ const CompleteTask = () => {
   const deleteButton = (event) => {
     const agree = window.confirm(`Are you sure to delete ${event.title}`);
     if (agree) {
-      fetch(`http://localhost:5000/delete/${event._id}`, {
+      fetch(`https://task-master-server.vercel.app/delete/${event._id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -49,12 +49,36 @@ const CompleteTask = () => {
         });
     }
   };
+
+
+//   NOT COMPLETE TASK 
+const notCompleteButton = (event) => {
+    fetch(`https://task-master-server.vercel.app/completedTask/${event._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application.json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("send to myTask");
+        refetch();
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   return (
     <div className="">
-      <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
-        {" "}
-        {user?.displayName}'s Completed Task
+     {
+        tasks?.length?  <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
+        {user?.displayName} Complete Task
       </h1>
+      :
+      <h1 className="text-sm md:text-3xl font-bold text-center my-10 text-green-400">
+      {user?.displayName} Has 0 Complete Task
+    </h1>
+     }
       {tasks?.map((task) => (
         <div
           key={task._id}
@@ -82,7 +106,14 @@ const CompleteTask = () => {
               >
                 <FaTrashAlt></FaTrashAlt>
               </Link>
-              <p>completed</p>
+              <Link
+              onClick={()=> notCompleteButton(task)}
+                title="Press to Delete"
+                className="btn  p-2 hover:shadow-xl rounded mr-2"
+              >
+                Not Completed
+              </Link>
+              
             </div>
           </div>
           <h3 className="text-sm md:text-xl font-medium">{task?.task}</h3>
